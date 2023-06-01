@@ -25,11 +25,16 @@
 
 #define AdaptiveFuzzyPID_VERSION        1   // software version of this library
 
-typedef struct  {
-  double delKp;
-  double delKi;
-  double delKp;
+typedef struct {
+  double deltaKp;
+  double deltaKi;
+  double deltaKp;
 } GainRange;
+
+typedef struct {
+  double min;
+  double max;
+} Range;
 
 class AdaptiveFuzzyPID
 {
