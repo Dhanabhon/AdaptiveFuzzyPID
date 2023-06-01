@@ -23,7 +23,7 @@
 #ifndef AdaptiveFuzzyPID_h
 #define AdaptiveFuzzyPID_h
 
-#define AdaptiveFuzzyPID_VERSION        1   // software version of this library
+#define LIBRARY_VERSION     "0.0.1"
 
 typedef struct {
   double deltaKp;
@@ -36,23 +36,52 @@ typedef struct {
   double max;
 } Range;
 
+enum MembershipFunctionType {
+  Triangular = 0,
+  Trapezoid = 1,
+  Gaussian = 2
+};
+
+enum InferenceMode {
+  MamdaniMaxMin = 0,
+  MamdaniMaxProduct = 1,
+  TSK = 2, // Takagi-Sugeno-Kang
+  SAM = 3, // Standard Additive Model
+};
+
 class AdaptiveFuzzyPID
 {
 public:
   AdaptiveFuzzyPID();
-  void begin();
   void update(double, double);
+
   void setKp(double, double);
   void setKi(double, double);
   void setKd(double, double);
+
+  long getSampleTime(void);
+  void setSampleTime(unsigned long);
+  void setMembershipFunctionType(MembershipFunctionType);
 private:
-   double kp, ki, kd;
-   double integral;
-   double derivative;
+  double kp, ki, kd;
+  double integral;
+  double derivative;
 
-   void addRule();
-   void setMembershipFunction();
+  double *input;
+  double *output;
+  double *setpoint;
 
+  unsigned long previousMillis;
+  unsigned long currentMillis;
+  unsigned long sampleTimeInMs;
+
+  MembershipFunctionType currentMembershipFunctionType = MembershipFunctionType::Triangular;
+  InferenceMode currentInferenceMode = InferenceMode::MamdaniMaxMin;
+
+  void addRule();
+  void addTerm();
+  void setMembershipFunctionInput();
+  void setMembershipFunctionOutput();
 };
 
 #endif
