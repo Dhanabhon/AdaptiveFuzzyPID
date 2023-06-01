@@ -27,7 +27,7 @@ void AdaptiveFuzzyPID::update(double setpoint, double input) {
     if (this->currentMillis - this->previousMillis >= sampleTimeInMs) {
         this->previousMillis = this->currentMillis;
 
-        double error = setpoint - input;
+        // double error = setpoint - input;
 
     }
 }
