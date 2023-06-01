@@ -28,7 +28,7 @@
 typedef struct {
   double deltaKp;
   double deltaKi;
-  double deltaKp;
+  double deltaKd;
 } GainRange;
 
 typedef struct {
