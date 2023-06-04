@@ -25,21 +25,43 @@
 
 #define LIBRARY_VERSION     "0.0.1"
 
-typedef struct {
-  double deltaKp;
-  double deltaKi;
-  double deltaKd;
-} GainRange;
+// typedef struct {
+//   double NL;   // Negative Large
+//   double NM;   // Negative Medium
+//   double NS;   // Negative Small
+//   double Z;    // Zero
+//   double PS;   // Positive Small
+//   double PM;   // Positive Medium
+//   double PL;   // Positive Large
+// } FuzzySet;
 
 typedef struct {
-  double min;
-  double max;
-} Range;
+  double a;
+  double b;
+  double c;
+} TriangleParams;
+
+typedef struct {
+  double a;
+  double b;
+  double c;
+  double d;
+} TrapezoidParams;
+
+typedef struct {
+  double a;
+  double b;
+  double c;
+} BellShapedParams;
 
 enum MembershipFunctionType {
-  Triangular = 0,
+  Triangle = 0,
   Trapezoid = 1,
-  Gaussian = 2
+  Gaussian = 2,
+  BellShaped = 3,
+  SmoothShaped = 4, // S-Shaped
+  ZShaped = 5, // Z-Shaped
+  Singleton = 6,
 };
 
 enum InferenceMode {
@@ -55,13 +77,10 @@ public:
   AdaptiveFuzzyPID();
   void update(double, double);
 
-  void setKp(double, double);
-  void setKi(double, double);
-  void setKd(double, double);
-
   long getSampleTime(void);
   void setSampleTime(unsigned long);
-  void setMembershipFunctionType(MembershipFunctionType);
+  void setMembershipFunctionInputType(MembershipFunctionType);
+  void setMembershipFunctionOutputType(MembershipFunctionType);
 private:
   double kp, ki, kd;
   double integral;
@@ -75,13 +94,18 @@ private:
   unsigned long currentMillis;
   unsigned long sampleTimeInMs;
 
-  MembershipFunctionType currentMembershipFunctionType = MembershipFunctionType::Triangular;
+  MembershipFunctionType currentMembershipFunctionInputType = MembershipFunctionType::Triangle;
+  MembershipFunctionType currentMembershipFunctionOutputType = MembershipFunctionType::BellShaped;
+
   InferenceMode currentInferenceMode = InferenceMode::MamdaniMaxMin;
 
+  /* Fuzzification */
+  // FuzzySet currentFuzzySet;
   void addRule();
-  void addTerm();
-  void setMembershipFunctionInput();
-  void setMembershipFunctionOutput();
+  void addTerm(double, ...);
+
+  void setMembershipFunctionInput(double, double);
+  void setMembershipFunctionOutput(double, double);
 };
 
 #endif
