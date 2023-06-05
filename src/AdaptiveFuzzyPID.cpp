@@ -23,6 +23,13 @@ long AdaptiveFuzzyPID::getSampleTime(void) {
 }
 
 void AdaptiveFuzzyPID::setSampleTime(unsigned long sampleTime) {
+    // Value between 5 and 100 samples
+    if (sampleTime < 5) {
+        sampleTime = 5;
+    } else if (sampleTime > 100) {
+        sampleTime = 100;
+    }
+
     this->sampleTimeInMs = sampleTime;
 }
 
