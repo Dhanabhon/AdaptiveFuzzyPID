@@ -60,7 +60,16 @@ void AdaptiveFuzzyPID::setMembershipFunctionInput(double start, double end) {
         break;
         case Trapezoid:
         {
-            TriangleParams NL, NM, NS, Z, PS, PM, PL;
+            TrapezoidParams NL, NM, NS, Z, PS, PM, PL;
+
+            // TODO:
+        }    
+        break;
+        case Gaussian:
+        {
+            GaussianParams NL, NM, NS, Z, PS, PM, PL;
+
+            // double u = exp(-pow(((x - ave) / sigma), 2));
 
             // TODO:
         }    
@@ -106,6 +115,19 @@ void AdaptiveFuzzyPID::update(double setpoint, double input) {
         this->previousMillis = this->currentMillis;
 
         // double error = setpoint - input;
+        // TODO:
 
     }
+}
+
+double AdaptiveFuzzyPID::AND(double x, double y) {
+    if (x < y)
+        return x;
+    return y;
+}
+
+double AdaptiveFuzzyPID::OR(double x, double y) {
+    if (x > y)
+        return x;
+    return y;
 }
