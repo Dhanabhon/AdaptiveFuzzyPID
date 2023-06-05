@@ -1,3 +1,12 @@
+/*
+          _   _
+        ( (___) )
+        [  x  x ]
+         \     /
+         ( ' ' )
+           (U)
+    Cult of the Dead Cow     
+*/
 
 #include <Arduino.h>
 
@@ -36,36 +45,40 @@ void AdaptiveFuzzyPID::setMembershipFunctionInput(double start, double end) {
 
     switch (this->currentMembershipFunctionInputType)
     {
-    case Triangle:
-        TriangleParams NL, NM, NS, Z, PS, PM, PL;
-        NL.a = p1, NL.b = p1, NL.c = p2;
-        NM.a = p1, NM.b = p2, NM.c = p3;
-        NS.a = p2, NL.b = p3, NL.c = p4;
-        Z.a  = p3, NL.b = p4, NL.c = p5;
-        PS.a = p4, NL.b = p5, NL.c = p6;
-        PM.a = p5, NL.b = p6, NL.c = p7;
-        PL.a = p6, NL.b = p7, NL.c = p7;
-        // TODO:
-
+        case Triangle:
+        {
+            TriangleParams NL, NM, NS, Z, PS, PM, PL;
+            NL.a = p1, NL.b = p1, NL.c = p2;
+            NM.a = p1, NM.b = p2, NM.c = p3;
+            NS.a = p2, NL.b = p3, NL.c = p4;
+            Z.a  = p3, NL.b = p4, NL.c = p5;
+            PS.a = p4, NL.b = p5, NL.c = p6;
+            PM.a = p5, NL.b = p6, NL.c = p7;
+            PL.a = p6, NL.b = p7, NL.c = p7;
+            // TODO:
+        }
         break;
-    case Trapezoid:
-        // TriangleParams NL, NM, NS, Z, PS, PM, PL;
+        case Trapezoid:
+        {
+            TriangleParams NL, NM, NS, Z, PS, PM, PL;
 
-        // TODO:
+            // TODO:
+        }    
         break;
-    case BellShaped:
-        // BellShapedParams NL, NM, NS, Z, PS, PM, PL;
-        // double width = (end - start) / 10.0;
-        // double slope = width * 10.0;
-        // NL.a = p1, NL.b = width, NL.c = slope;
-        // NM.a = p2, NM.b = width, NM.c = slope;
-        // NS.a = p3, NL.b = width, NL.c = slope;
-        // Z.a  = p4, NL.b = width, NL.c = slope;
-        // PS.a = p5, NL.b = width, NL.c = slope;
-        // PM.a = p6, NL.b = width, NL.c = slope;
-        // PL.a = p7, NL.b = width, NL.c = slope;
-        //TODO:
-
+        case BellShaped:
+        {
+            BellShapedParams NL, NM, NS, Z, PS, PM, PL;
+            double width = (end - start) / 10.0;
+            double slope = width * 10.0;
+            NL.a = p1, NL.b = width, NL.c = slope;
+            NM.a = p2, NM.b = width, NM.c = slope;
+            NS.a = p3, NL.b = width, NL.c = slope;
+            Z.a  = p4, NL.b = width, NL.c = slope;
+            PS.a = p5, NL.b = width, NL.c = slope;
+            PM.a = p6, NL.b = width, NL.c = slope;
+            PL.a = p7, NL.b = width, NL.c = slope;
+            //TODO:
+        }
         break;
     default:
         break;
