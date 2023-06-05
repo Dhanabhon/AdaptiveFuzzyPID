@@ -49,6 +49,13 @@ typedef struct {
 } TrapezoidParams;
 
 typedef struct {
+  double x;
+  double ave;
+  double sigma;
+} GaussianParams;
+
+
+typedef struct {
   double a;
   double b;
   double c;
@@ -106,6 +113,9 @@ private:
 
   void setMembershipFunctionInput(double, double);
   void setMembershipFunctionOutput(double, double);
+
+  double AND(double, double);
+  double OR(double, double);
 };
 
 #endif
