@@ -1,0 +1,84 @@
+{
+  "name": "AdaptiveFuzzyPID",
+  "version": "0.0.1",
+  "description": "Adaptive Fuzzy PID (AFPID) is a comprehensive Arduino library designed to enhance DC motor speed control performance through intelligent parameter adaptation. By combining traditional PID control with fuzzy logic techniques, AFPID dynamically adjusts control parameters in real-time based on system behavior and error characteristics.",
+  "keywords": [
+    "pid",
+    "fuzzy",
+    "adaptive",
+    "control",
+    "motor",
+    "dc-motor",
+    "speed-control",
+    "automation",
+    "robotics",
+    "embedded",
+    "real-time",
+    "membership-functions",
+    "inference-engine",
+    "mamdani",
+    "takagi-sugeno"
+  ],
+  "authors": [
+    {
+      "name": "Tom Dhanabhon",
+      "email": "dev@dhanabhon.com",
+      "url": "https://github.com/Dhanabhon",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dhanabhon/Adaptive-Fuzzy-PID.git"
+  },
+  "homepage": "https://github.com/Dhanabhon/Adaptive-Fuzzy-PID",
+  "license": "LGPL-2.1-or-later",
+  "frameworks": [
+    "arduino"
+  ],
+  "platforms": [
+    "atmelavr",
+    "atmelsam",
+    "espressif8266",
+    "espressif32",
+    "ststm32",
+    "teensy",
+    "nordicnrf51",
+    "nordicnrf52"
+  ],
+  "headers": [
+    "AdaptiveFuzzyPID.h"
+  ],
+  "export": {
+    "include": [
+      "src/*",
+      "examples/*",
+      "*.md",
+      "*.properties",
+      "LICENSE"
+    ]
+  },
+  "examples": [
+    {
+      "name": "BasicUsage",
+      "base": "examples/BasicUsage",
+      "files": [
+        "BasicUsage.ino"
+      ]
+    },
+    {
+      "name": "AdvancedConfiguration",
+      "base": "examples/AdvancedConfiguration",
+      "files": [
+        "AdvancedConfiguration.ino"
+      ]
+    }
+  ],
+  "dependencies": {},
+  "build": {
+    "libCompatMode": 2,
+    "flags": [
+      "-std=c++11"
+    ]
+  }
+}

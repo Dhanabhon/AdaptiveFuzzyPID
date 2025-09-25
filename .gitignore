@@ -1,0 +1,61 @@
+# Arduino IDE files
+*.hex
+*.elf
+*.map
+*.lst
+*.sym
+
+# PlatformIO files
+.pio/
+.pioenvs/
+.piolibdeps/
+pioenvs/
+piolibdeps/
+
+# Build artifacts
+build/
+dist/
+*.o
+*.a
+*.so
+*.dll
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Log files
+*.log
+
+# Documentation build
+docs/_build/
+site/
+
+# Python cache (if any Python tools are used)
+__pycache__/
+*.pyc
+*.pyo
+
+# Node modules (if any web-based tools are used)
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+CLAUDE.md

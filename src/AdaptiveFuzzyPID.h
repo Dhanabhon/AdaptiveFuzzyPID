@@ -1,4 +1,12 @@
 /*
+          _   _
+        ( (___) )
+        [  x  x ]
+         \     /
+         ( ' ' )
+           (U)
+    Cult of the Dead Cow  
+    
   AdaptiveFuzzyPID.h - Adaptive Fuzzy PID (AFPID) is a powerful 
   Arduino library designed specifically to enhance the control 
   performance of speed for DC motors.- Version 2
@@ -66,56 +74,93 @@ enum MembershipFunctionType {
   Trapezoid = 1,
   Gaussian = 2,
   BellShaped = 3,
-  SmoothShaped = 4, // S-Shaped
+  SShaped = 4, // S-Shaped
   ZShaped = 5, // Z-Shaped
-  Singleton = 6,
+  Singleton = 6
 };
 
 enum InferenceMode {
   MamdaniMaxMin = 0,
   MamdaniMaxProduct = 1,
   TSK = 2, // Takagi-Sugeno-Kang
-  SAM = 3, // Standard Additive Model
+  SAM = 3  // Standard Additive Model
 };
 
 class AdaptiveFuzzyPID
 {
 public:
-  AdaptiveFuzzyPID();
-  void update(double, double);
+  AdaptiveFuzzyPID(double kp = 1.0, double ki = 0.0, double kd = 0.0);
 
+  // Main control function
+  double update(double setpoint, double input);
+
+  // Configuration methods
+  void setTunings(double kp, double ki, double kd);
+  void setSampleTime(unsigned long sampleTimeMs);
+  void setInputRange(double min, double max);
+  void setOutputRange(double min, double max);
+  void setMembershipFunctionInputType(MembershipFunctionType type);
+  void setMembershipFunctionOutputType(MembershipFunctionType type);
+  void setInferenceMode(InferenceMode mode);
+
+  // Getter methods
   long getSampleTime(void);
-  void setSampleTime(unsigned long);
-  void setMembershipFunctionInputType(MembershipFunctionType);
-  void setMembershipFunctionOutputType(MembershipFunctionType);
+  double getKp() const { return kp; }
+  double getKi() const { return ki; }
+  double getKd() const { return kd; }
 private:
+  // PID parameters
   double kp, ki, kd;
   double integral;
   double derivative;
+  double lastError;
 
-  double *input;
-  double *output;
-  double *setpoint;
+  // Input/Output ranges
+  double inputMin, inputMax;
+  double outputMin, outputMax;
 
+  // Timing
   unsigned long previousMillis;
-  unsigned long currentMillis;
   unsigned long sampleTimeInMs;
 
-  MembershipFunctionType currentMembershipFunctionInputType = MembershipFunctionType::Triangle;
-  MembershipFunctionType currentMembershipFunctionOutputType = MembershipFunctionType::BellShaped;
+  // Fuzzy system configuration
+  MembershipFunctionType inputMFType;
+  MembershipFunctionType outputMFType;
+  InferenceMode inferenceMode;
 
-  InferenceMode currentInferenceMode = InferenceMode::MamdaniMaxMin;
+  // Membership function parameters
+  struct MembershipFunction {
+    double params[4]; // Generic parameter array
+    MembershipFunctionType type;
+  };
 
-  /* Fuzzification */
-  // FuzzySet currentFuzzySet;
-  void addRule();
-  void addTerm(double, ...);
+  MembershipFunction errorMFs[7];    // Error membership functions
+  MembershipFunction deltaErrorMFs[7]; // Delta error membership functions
+  MembershipFunction outputMFs[7];   // Output membership functions
 
-  void setMembershipFunctionInput(double, double);
-  void setMembershipFunctionOutput(double, double);
+  // Fuzzy rule base (7x7 matrix)
+  int ruleBase[7][7];
 
-  double AND(double, double);
-  double OR(double, double);
+  // Private methods
+  void initializeMembershipFunctions();
+  void initializeRuleBase();
+  double calculateMembership(double x, const MembershipFunction& mf);
+  double triangleMF(double x, double a, double b, double c);
+  double trapezoidMF(double x, double a, double b, double c, double d);
+  double gaussianMF(double x, double center, double sigma);
+  double bellShapedMF(double x, double a, double b, double c);
+  double sShapedMF(double x, double a, double b);
+  double zShapedMF(double x, double a, double b);
+  double singletonMF(double x, double value);
+
+  double fuzzify(double value, MembershipFunction* mfs);
+  double defuzzify(double* membershipValues);
+  double fuzzyInference(double error, double deltaError);
+
+  // Fuzzy operators
+  double fuzzyAND(double a, double b);
+  double fuzzyOR(double a, double b);
+  double fuzzyNOT(double a);
 };
 
 #endif
