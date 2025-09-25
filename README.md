@@ -2,6 +2,10 @@
 
 Adaptive Fuzzy PID (AFPID) is a comprehensive Arduino library designed to enhance DC motor speed control performance through intelligent parameter adaptation. By combining traditional PID control with fuzzy logic techniques, AFPID dynamically adjusts control parameters in real-time based on system behavior and error characteristics.
 
+## ⚠️ Development Status
+
+This library is currently under active development. While the core functionality is implemented, some features may be incomplete or subject to change. Please use with caution in production environments.
+
 ## Features
 
 **Complete Implementation**
@@ -150,7 +154,7 @@ The controller continuously adapts its parameters based on system performance, p
 
 ## License
 
-This library is released under the GNU Lesser General Public License v2.1. See LICENSE file for details.
+This library is released under the MIT License. See LICENSE file for details.
 
 ## Contributing
 
